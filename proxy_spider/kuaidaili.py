@@ -1,14 +1,17 @@
 import grequests
 from bs4 import BeautifulSoup
 from setting import headers as hd
-from multiprocessing import Pool
 
 
 class ProxySpider:
+    start_url = 'https://www.kuaidaili.com/free/inha/{}/'
+
     def __init__(self, size=None):
+        """
+        :param size: grequests 线程数量
+        """
         self.size = size if size else 20
-        start_url = 'https://www.kuaidaili.com/free/inha/{}/'
-        self.all_url = [start_url.format(int(i)) for i in range(1, 10)]
+        self.all_url = [self.start_url.format(int(i)) for i in range(1, 10)]
         self.headers = hd(spider_name='kuaidaili.py')
 
     def req(self, url):
@@ -29,4 +32,7 @@ class ProxySpider:
         """
         soup = BeautifulSoup(text, 'lxml')
         tr = soup.body.find('div', id='content').find('tbody').find_all('tr')
-        
+
+
+
+
